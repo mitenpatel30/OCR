@@ -3,7 +3,7 @@ import { Text, View, TouchableOpacity, StyleSheet,Image, CameraRoll,Button} from
 import { Camera, Permissions } from 'expo';
 import { Ionicons } from '@expo/vector-icons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
-import { Constants, takeSnapshotAsync , takePictureAsync} from 'expo';
+import { Constants, takeSnapshotAsync , takePictureAsync, ImageManipulator} from 'expo';
 class BestScreen extends Component {
 
   state = {
@@ -17,10 +17,12 @@ async componentDidMount() {
 }
 _saveToCameraRollAsync = async () => {
   if (this.camera) {
-   let photo = await this.camera.takePictureAsync()
+   let photo = await this.camera.takePictureAsync();
    console.log('photo');
-   let result = photo.uri;
-    let saveResult = await CameraRoll.saveToCameraRoll(result, 'photo');
+photo = await ImageManipulator.manipulate(photo.uri,
+      [{ rotate: -360}
+]);
+    let saveResult = await CameraRoll.saveToCameraRoll(photo.uri, 'photo');
     console.log('saveResult');
     this.props.navigation.navigate('Gallery');
   }
@@ -43,8 +45,7 @@ render() {
               flexDirection: 'row',justifyContent:'center',alignItems:'flex-end',marginBottomn:20
             }}
             collapsable={false}>
-            <TouchableOpacity
-              >
+            <TouchableOpacity>
               <MaterialCommunityIcons name="circle-outline"
                   style={{ color: 'white', fontSize: 100 }}
                   onPress={this._saveToCameraRollAsync}>

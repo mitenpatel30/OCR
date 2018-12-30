@@ -19,31 +19,27 @@ class CameraRollView extends Component {
       fetchParams: { first: 5 },
       groupTypes: 'SavedPhotos',
     }
-    this._storeImages = this._storeImages.bind(this)
-    this._logImageError = this._logImageError.bind(this)
     this._selectImage = this._selectImage.bind(this)
   }
 
   componentDidMount() {
     // get photos from camera roll
-    CameraRoll.getPhotos(this.state.fetchParams, this._storeImages, this._logImageError);
+    CameraRoll.getPhotos({first: 5}).then(
+  (data) =>{
+    const assets = data.edges
+    const images = assets.map((asset) => asset.node.image);
+        this.setState({
+          isCameraLoaded: true,
+          images: images
+        })
+  },
+  (error) => {
+     console.warn(error);
   }
-
-  // callback which processes received images from camera roll and stores them in an array
-  _storeImages(data) {
-    const assets = data.edges;
-    const images = assets.map( asset => asset.node.image );
-    this.setState({
-        images: images,
-    });
-  }
-
-  _logImageError(err) {
-      console.log(err);
+);
   }
 
   _selectImage(uri) {
-    // define whatever you want to happen when an image is selected here
     this.setState({
       selected: uri,
     });
