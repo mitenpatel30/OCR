@@ -6,25 +6,23 @@ import {
   StyleSheet,
   TouchableHighlight,
   View,
+  Modal
 } from 'react-native';
 
-class CameraRollView extends Component {
-
+class GalleryScreen extends Component {
   constructor(props) {
     super(props)
     var controls = props.controls
     this.state = {
       images: [],
       selected: '',
-      fetchParams: { first: 5 },
+      fetchParams: { first: 21 },
       groupTypes: 'SavedPhotos',
     }
     this._selectImage = this._selectImage.bind(this)
   }
-
   componentDidMount() {
-    // get photos from camera roll
-    CameraRoll.getPhotos({first: 5}).then(
+    CameraRoll.getPhotos({first: 21}).then(
   (data) =>{
     const assets = data.edges
     const images = assets.map((asset) => asset.node.image);
@@ -45,7 +43,6 @@ class CameraRollView extends Component {
     });
     console.log('Selected image: ', uri);
   }
-
   render() {
     return (
       <View style={{flex: 1, backgroundColor: 'white'}}>
@@ -76,10 +73,10 @@ const styles = StyleSheet.create({
       justifyContent: 'center'
   },
   image: {
-      width: 100,
-      height: 100,
-      margin: 10,
+      width: 120,
+      height: 120,
+      margin: 1,
   },
 });
 
-export default CameraRollView
+export default GalleryScreen

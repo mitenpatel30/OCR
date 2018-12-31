@@ -28,7 +28,7 @@ const AppStack = createStackNavigator(
   Home: {screen: HomeScreen},
   Camera: {screen: BestScreen},
   Gallery:{screen:GalleryScreen}
-  },
+  },{ headerMode: 'none' },
   {
     initialRouteName: 'Home',
   }
