@@ -18,6 +18,7 @@
    Dimensions} from 'react-native';
  import { Camera, Permissions } from 'expo';
  import { createStackNavigator, createAppContainer } from 'react-navigation'
+ import RNTextDetector from "react-native-text-detector";
 
  import BestScreen from './screens/BestScreen'
  import HomeScreen from './screens/HomeScreen'

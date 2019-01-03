@@ -28,6 +28,18 @@ photo = await ImageManipulator.manipulateAsync(photo.uri,
 ]);
     let saveResult = await CameraRoll.saveToCameraRoll(photo.uri, 'photo');
     console.log('saveResult');
+    this.setState(
+        {
+          image: photo.uri
+        },
+        () => {
+          console.log(photo.uri);
+          this.processImage(photo.uri, {
+            height: photo.height,
+            width: photo.width
+          });
+        }
+      ),
     this.props.navigation.navigate('Gallery');
   }
 }
